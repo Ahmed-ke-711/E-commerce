@@ -1,7 +1,21 @@
-import React from 'react'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "../Pages/auth/LoginPage";
+import RegisterPage from "../Pages/auth/RegisterPage";
+import Layout from "../components/Layout/Layout";
+
+const Router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "/", element: <LoginPage /> },
+      { path: "/RegisterPage", element: <RegisterPage /> },
+    ],
+  },
+]);
 
 export default function App() {
   return (
-    <h1 className='text-5xl text-center p-10 mt-7 mb-7 ms-4 me-4 border-4 border-black bg-cyan-300'>Cart</h1>
+    <RouterProvider router={Router} />
   )
 }
