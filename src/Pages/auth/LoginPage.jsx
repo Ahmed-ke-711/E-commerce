@@ -1,5 +1,6 @@
 import { useLogin } from "../../../src/hooks/use-login";
 import { useState } from "react";
+import { schema } from "../../schemas/auth.schema";
 
 export default function Login() {
   const login = useLogin();
@@ -7,6 +8,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState({})
 
   const handleChange = (e) => {
     setFormData({
@@ -17,7 +19,12 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const result = schema.safeParse(formData)
     login.mutate(formData);
+    if(!result.success) {
+      setErrors(result.error.flatten().fieldErrors)
+    }
+    return
   }; 
 
   return (
@@ -39,8 +46,14 @@ export default function Login() {
                 name="email"
                 className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
                 placeholder="Enter Your Email"
-                required
+                
             />
+            {errors.email && (
+              <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+                <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+                <span>{errors.email[0]}</span>
+              </div>
+            )}
         </div>
 
         <div className="mb-5">
@@ -58,8 +71,14 @@ export default function Login() {
                 name="password"
                 className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
                 placeholder="Enter Your Password"
-                required
+                
             />
+            {errors.password && (
+              <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+              <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+              <span>{errors.email[0]}</span>
+            </div>
+            )}
         </div>
 
         <button 

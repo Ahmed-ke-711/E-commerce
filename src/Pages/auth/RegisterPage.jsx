@@ -1,22 +1,17 @@
 import { useRegister } from "../../hooks/use-register";
-import { regex } from "../../lib/APIs/regex";
 import { useState } from "react";
+import { schema } from "../../schemas/auth.schema";
 
 export default function Register() {
   const Register = useRegister();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    Name: "",
     email: "",
     password: "",
     rePassword: "",
-    gender: "male",
-    height: 170,
-    weight: 70,
-    age: 70,
-    goal: "Gain weight",
-    activityLevel: "level1",
+    phone: "",
   });
+  const [errors, setErrors] = useState({})
 
   const handleChange = (e) => {
     setFormData({
@@ -27,7 +22,12 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const result = schema.safeParse(formData)
     Register.mutate(formData);
+    if(!result.success) {
+        setErrors(result.error.flatten().fieldErrors)
+    }
+    return
   };
 return (
     <>
@@ -43,12 +43,17 @@ return (
             type="text"
             id="name"
             onChange={handleChange}
-            value={formData.firstName}
+            value={formData.Name}
             name="name"
             className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
             placeholder="Enter Your Name"
-            required
         />
+        {errors.Name && (
+            <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+                <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+                <span>{errors.Name[0]}</span>
+            </div>
+            )}
     </div>
     <div className="mb-5">
         <label
@@ -65,8 +70,13 @@ return (
             name="email"
             className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
             placeholder="Enter Your Email"
-            required
         />
+        {errors.email && (
+            <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+                <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+                <span>{errors.email[0]}</span>
+            </div>
+            )}
     </div>
     <div className="mb-5">
         <label
@@ -83,8 +93,13 @@ return (
             name="password"
             className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
             placeholder="Enter Your Password"
-            required
         />
+        {errors.password && (
+            <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+                <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+                <span>{errors.password[0]}</span>
+            </div>
+            )}
     </div>
     <div className="mb-5">
         <label
@@ -101,8 +116,13 @@ return (
             name="rePassword"
             className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
             placeholder="Enter Your rePassword"
-            required
         />
+        {errors.rePassword && (
+            <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+                <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+                <span>{errors.rePassword[0]}</span>
+            </div>
+            )}
     </div>
     <div className="mb-5">
         <label
@@ -115,12 +135,17 @@ return (
             type="tel"
             id="phone"
             onChange={handleChange}
-            value={formData.rePassword}
+            value={formData.phone}
             name="phone"
             className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
             placeholder="Enter Your Phone"
-            required
         />
+        {errors.phone && (
+            <div className="flex items-center gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-blue-800 mt-7">
+                <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">i</div>
+                <span>{errors.phone[0]}</span>
+            </div>
+            )}
     </div>
     
     <button 
