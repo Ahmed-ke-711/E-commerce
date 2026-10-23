@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const login = async (userData) => {
   const { data } = await axios.post(
-    "https://fitness.elevateegy.com/api/v1/auth/signin",
+    "https://ecommerce.routemisr.com/api/v1/auth/signin",
     userData,
   );
   return data;
@@ -10,7 +10,7 @@ export const login = async (userData) => {
 
 export const register = async (userData) => {
   const { data } = await axios.post(
-    "https://fitness.elevateegy.com/api/v1/auth/signup",
+    "https://ecommerce.routemisr.com/api/v1/auth/signup",
     userData
   );
   return data;

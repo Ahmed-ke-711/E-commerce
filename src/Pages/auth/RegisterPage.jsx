@@ -1,7 +1,6 @@
 import { useRegister } from "../../hooks/use-register";
 import { useState } from "react";
 import { schema } from "../../schemas/auth.schema";
-
 export default function Register() {
   const Register = useRegister();
   const [formData, setFormData] = useState({
@@ -12,7 +11,6 @@ export default function Register() {
     phone: "",
   });
   const [errors, setErrors] = useState({})
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -44,7 +42,7 @@ return (
             id="name"
             onChange={handleChange}
             value={formData.Name}
-            name="name"
+            name="Name"
             className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focusing:ring-brand focus:border-brand block w-full p-3 py-2.5 shadow-xs placeholder-text-body"
             placeholder="Enter Your Name"
         />
@@ -158,3 +156,13 @@ return (
 )
 }
 
+
+
+
+// import { Input } from "../../components/ui/input";
+
+// export default function RegisterPage() {
+//   return (
+//     <Input></Input>
+//   )
+// }
